@@ -60,14 +60,21 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "kitty", NULL };
 static const char *firefox[]  = { "firefox", NULL };
+static const char *pauseAud[]    = { "playerctl", "play-pause", NULL };
+static const char *nextAud[]     = { "playerctl", "next", NULL };
+static const char *prevAud[]     = { "playerctl", "previous", NULL };
 
 #include "selfrestart.c"
+#include <X11/XF86keysym.h>
 
 static const Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ShiftMask,		XK_f,      spawn,          {.v = firefox } },
+	{ 0,                    XF86XK_AudioPlay,  spawn,          {.v = pauseAud } },
+	{ 0,                    XF86XK_AudioNext,  spawn,          {.v = nextAud } },
+	{ 0,                    XF86XK_AudioPrev,  spawn,          {.v = prevAud } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
